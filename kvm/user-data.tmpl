@@ -1,0 +1,16 @@
+#cloud-config
+# First-boot configuration of every Cloud Fusion VM. kvm/provision.sh fills in
+# @HOSTNAME@, @SSH_KEY@ and @PACKAGES@. The same file works unchanged on VMware and
+# on AWS EC2, which also run cloud-init on first boot.
+hostname: @HOSTNAME@
+users:
+  - name: civic
+    groups: [sudo]
+    shell: /bin/bash
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
+    lock_passwd: true
+    ssh_authorized_keys:
+      - @SSH_KEY@
+ssh_pwauth: false
+package_update: @PACKAGE_UPDATE@
+packages: [@PACKAGES@]
