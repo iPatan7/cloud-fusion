@@ -1,0 +1,14 @@
+<!-- A libvirt network with no <forward> element: the VMs on it can reach each
+     other and the host (10.10.10.1), but nothing outside the machine. It plays
+     the role of a separate VLAN for traffic that must stay internal, such as the
+     database network of an application.
+       virsh net-define kvm/cf-isolated.xml && virsh net-start cf-isolated -->
+<network>
+  <name>cf-isolated</name>
+  <bridge name='virbr-cfiso' stp='on' delay='0'/>
+  <ip address='10.10.10.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='10.10.10.10' end='10.10.10.50'/>
+    </dhcp>
+  </ip>
+</network>
